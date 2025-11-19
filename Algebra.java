@@ -6,10 +6,10 @@
 public class Algebra {
 	public static void main(String args[]) {
 	    // Tests some of the operations
-	    System.out.println(plus(2,3));   // 2 + 3
-	    System.out.println(minus(7,2));  // 7 - 2
-   		System.out.println(minus(2,7));  // 2 - 7
- 		System.out.println(times(3,4));  // 3 * 4
+	    System.out.println(plus(-2,-3));   // 2 + 3
+	    System.out.println(minus(0,-2));  // 7 - 2
+   		System.out.println(minus(2,-7));  // 2 - 7
+ 		System.out.println(times(-3,4));  // 3 * 4
    		System.out.println(plus(2,times(4,2)));  // 2 + 4 * 2
    		System.out.println(pow(5,3));      // 5^3
    		System.out.println(pow(3,5));      // 3^5
@@ -27,7 +27,7 @@ public class Algebra {
 	public static int plus(int x1, int x2) {
 		int resault = x1;
 		if (x2 < 0) {
-			for (int i = 0; i < x2; i++) {
+			for (int i = 0; i > x2; i--) {
 				resault--;
 			}
 		} else if (x2 > 0) {
@@ -48,7 +48,7 @@ public class Algebra {
 				resault--;
 			}
 		} else if (x2 < 0) {
-			for (int i = 0; i < x2; i++) {
+			for (int i = 0; i > x2; i--) {
 				resault++;
 			}
 		} else {
@@ -59,22 +59,47 @@ public class Algebra {
 
 	// Returns x1 * x2
 	public static int times(int x1, int x2) {
-		int resault = 0;
-		if (x2 == 0) {
+		int resault = x1;
+		if ((x1 == 0) || (x2 == 0)) {
 			resault = 0;
+		} else if (x1 == 1) {
+			resault = x2;
 		} else if (x2 == 1) {
 			resault = x1;
-		} else if (((x2 > 0) && (x1 > 0)) || ((x2 < 0) && (x1 < 0))) {
-			//both negative or both positive
-			for (int i = 0; i < x2; i++) {
-				resault = plus(resault, x1);
+		} else if (x1 == -1) {
+			resault = -x2;
+		} else if (x2 == -1) {
+			resault = -x1;
+		} else {
+			if (x2 > 1) {
+				// x2 is pos
+				if (x1 > 1) {
+					//x1 is also pos
+					for (int i = 1; i < x2; i++) {
+						resault = plus(resault, x1);
+					}
+				} else {
+					//x1 is neg
+					for (int i = 1; i < x2; i++) {
+						resault = plus(resault, x1);
+					}
+				}
+			} else {
+				//x2 is neg
+				if (x1 < -1) {
+					//x1 is also neg
+					for (int i = -1; i > x2; i--) {
+						resault = plus(resault, x1);
+					}
+					resault = minus(0, resault);
+				} else {
+					//x1 is pos
+					for (int i = -1; i > x2; i--) {
+						resault = plus(resault, x1);
+					}
+					resault = minus(0, resault);
+				}
 			}
-		} else if (((x2 < 0) && (x1 > 0)) || ((x2 > 0) && (x1 < 0))) {
-			//one negative and the other positive
-			for (int i = 0; i < x2; i++) {
-				resault = plus(resault, x1);
-			}
-			resault = minus(0, resault);
 		}
 		return resault;
 	}
