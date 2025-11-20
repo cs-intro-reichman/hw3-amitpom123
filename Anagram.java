@@ -1,3 +1,5 @@
+import javax.print.DocFlavor.STRING;
+
 /** Functions for checking if a given string is an anagram. */
 public class Anagram {
 	public static void main(String args[]) {
@@ -25,25 +27,70 @@ public class Anagram {
 		}
 		System.out.println(pass ? "test passed" : "test Failed");
 	}  
+	
 
 	// Returns true if the two given strings are anagrams, false otherwise.
 	public static boolean isAnagram(String str1, String str2) {
-		// Replace the following statement with your code
-		return false;
+
+		//erase the special letters from both strings
+		str1 = preProcess(str1);
+		str2 = preProcess(str2);
+
+		if (str1.length() != str2.length()) {
+			return false;
+		} else {
+			//cheaks if identical
+			for (int i = 0; i < str1.length(); i++) {
+				for (int j = 0; j < str2.length(); j++) {
+					if (str1.charAt(i) == str2.charAt(j)) {
+						str2 = str2.substring(0, j) + str2.substring(j+1, str2.length());
+					}
+				}
+			}
+		}
+		boolean equals = (str2.length() == 0);
+		//all the letters was removed meaning all identical
+
+		return equals;
 	}
 	   
 	// Returns a preprocessed version of the given string: all the letter characters are converted
 	// to lower-case, and all the other characters are deleted, except for spaces, which are left
 	// as is. For example, the string "What? No way!" becomes "whatnoway"
 	public static String preProcess(String str) {
-		// Replace the following statement with your code
-		return "";
+		String result = "";
+		for (int i = 0; i < str.length(); i++) {
+
+			char b = str.charAt(i);
+			
+			boolean isSpecial = ((b >= 32) && (b <= 64));
+
+			if (!isSpecial) {
+				result += b;
+			}
+		}
+		String finelString = result.toLowerCase();
+		return finelString;
 	} 
 	   
 	// Returns a random anagram of the given string. The random anagram consists of the same
 	// characters as the given string, re-arranged in a random order. 
 	public static String randomAnagram(String str) {
-		// Replace the following statement with your code
-		return "";
+		str = str.toLowerCase();
+		String newStr = "";
+		while (str.length() > 0) {
+
+			//chooses a randome letter
+			double a = Math.random();
+			double b = a * str.length();
+			int location = (int)(b);
+
+			//place it in the new string
+			newStr += str.charAt(location);
+
+			//removes it from the old string
+			str = str.substring(0, location) + str.substring(location+1);
+		}
+		return newStr;
 	}
 }
