@@ -138,6 +138,27 @@ public class Algebra {
 			result = count;
 		} else if (x1 > x2) {
 			result = 0;
+		} else if (x2 < 0 && x1 > 0) {
+			int m = -x2;
+			while (m <= x1) {
+				m = plus(m, x2);
+				count++;
+			}
+			result = -count;
+		} else if (x2 > 0 && x1 < 0) {
+			int m = x2;
+			while (m <= -x1) {
+				m = plus(m, x2);
+				count++;
+			}
+			result = -count;
+		} else {
+			int m = -x2;
+			while (m <= -x1) {
+				m = plus(m, x2);
+				count++;
+			}
+			result = count;
 		}
 		return result;
 	}
