@@ -13,7 +13,7 @@ public class Algebra {
    		//System.out.println(plus(2,times(4,2)));  // 2 + 4 * 2
    		//System.out.println(pow(5,3));      // 5^3
    		//System.out.println(pow(3,5));      // 3^5
-   		System.out.println(div(12,-3));   // 12 / 3    
+   		System.out.println(div(-12,3));   // 12 / 3    
    		System.out.println(div(5,5));    // 5 / 5  
    		System.out.println(div(25,7));   // 25 / 7
    		System.out.println(mod(25,7));   // 25 % 7
@@ -122,27 +122,25 @@ public class Algebra {
 	// Returns the integer part of x1 / x2 
 	public static int div(int x1, int x2) {
 		int result = 0;
-		int count = 0;
-		if (x2 == 1) {
-			result = x1;
-		} else if (x2 == 0) {
+		if (x2 == 0) {
 			result = -1;
-		} else if (x1 == x2) {
-			result = 1;
-		} else if (x1 > x2) {
-			int m = Math.abs(x2);
-			while (m <= x1) {
-				m = plus(m, Math.abs(x2));
-				count++;
-			}
-			if ((x2 < 0) || (x1 < 0)) {
-				count = -count;
-			}
-			result = count;
-		} else if (x2 > x1) {
+		} else if (x1 == 0) {
 			result = 0;
+		} 
+		boolean negative = ((x1 < 0) && (x2 > 0) || ((x1 > 0) && (x2 < 0)));
+		int a = Math.abs(x1);
+		int b = Math.abs(x2);
+		int count = 0;
+
+		while (a >= b) {
+			a = minus(a, b);
+			count++;
 		}
-		return result;
+		if (negative) {
+			return minus(0, count);
+		} else {
+			return count;
+		}
 	}
 
 	// Returns x1 % x2
